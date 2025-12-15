@@ -1,19 +1,13 @@
 package org.example;
 
-import java.util.Scanner;
-
+// project Euler 1
 public class Main {
     public static void main(String[] args) {
 
-        int next = 1;
-        int now = 0;
-        int temp;
+        int sum = 0;
 
-        for(int i = 0; i < 10; i++){
-            System.out.println(now);
-            temp = now;
-            now = now + next;
-            next = temp;
-        }
+        for(int i = 1; i < 1000; i++) if(i % 3 == 0 || i % 5 == 0) sum += i;
+
+        System.out.println(sum);
     }
 }
