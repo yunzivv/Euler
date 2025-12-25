@@ -1,23 +1,17 @@
 package org.example;
 
-// project Euler 5
+// project Euler 6
 public class Main {
     public static void main(String[] args) {
 
-        int num = 20;
-        int n = 2520;
+        long powSum = 0;
+        long sumPow = 0;
 
-        while(true){
-
-            for(num = 20; num > 0; num--) {
-                if(n % num != 0) break;
-            }
-            if(num == 0) break;
-
-            n++;
+        for(int i = 1; i <= 100; i++){
+            powSum += Math.pow(i,2);
+            sumPow += i;
         }
 
-        System.out.println(n);
+        System.out.println(Math.pow(sumPow, 2) - powSum);
     }
-
 }
