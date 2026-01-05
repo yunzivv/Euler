@@ -1,16 +1,21 @@
 package org.example;
 
-// project Euler 10
+import java.util.ArrayList;
+import java.util.List;
+
+// project Euler 7
 public class Main {
     public static void main(String[] args) {
 
-        long answer = 0;
+        List<Integer> primes = new ArrayList<>();
+        int n = 2;
 
-        for(int i = 2; i <= 2000000; i++){
-            if(isPrime(i)) answer += i;
+        while(primes.size() < 10001) {
+            if(isPrime(n)) primes.add(n);
+            n++;
         }
 
-        System.out.println(answer);
+        System.out.println(n-1);
     }
 
     public static boolean isPrime(int n) {
