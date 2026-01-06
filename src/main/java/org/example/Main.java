@@ -1,25 +1,27 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
-// project Euler 7
+// project Euler 4
 public class Main {
     public static void main(String[] args) {
 
-        List<Integer> primes = new ArrayList<>();
-        int n = 2;
+        int symmetry = 0;
 
-        while(primes.size() < 10001) {
-            if(isPrime(n)) primes.add(n);
-            n++;
+        for(int i = 999; i > 100; i--){
+            for(int j = i; j > 100; j--){
+                if(i * j < symmetry) break;
+                if(isSymmetry(i * j)) symmetry = Math.max(i * j, symmetry);
+            }
         }
 
-        System.out.println(n-1);
+        System.out.println(symmetry);
     }
 
-    public static boolean isPrime(int n) {
-        for(int i = 2; i <= Math.sqrt(n); i++) if (n % i == 0) return false;
+    public static boolean isSymmetry(int n) {
+        String num = Integer.toString(n);
+
+        for(int i = 0; i < num.length()/2; i++){
+            if(num.charAt(i) != num.charAt(num.length()-1-i))return false;
+        }
         return true;
     }
 }
