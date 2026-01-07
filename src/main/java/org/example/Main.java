@@ -1,27 +1,21 @@
 package org.example;
 
-// project Euler 4
+// project Euler 9
 public class Main {
     public static void main(String[] args) {
 
-        int symmetry = 0;
+        int a = 1;
 
-        for(int i = 999; i > 100; i--){
-            for(int j = i; j > 100; j--){
-                if(i * j < symmetry) break;
-                if(isSymmetry(i * j)) symmetry = Math.max(i * j, symmetry);
+        for(a = 1; a <= 400; a++){
+            for(int b = a + 1; b <= 400; b++){
+                double c = Math.sqrt(Math.pow(a, 2l) + Math.pow(b, 2l));
+                if(c % 1 == 0 && a + b + c == 1000) {
+                    System.out.println(a * b * c);
+                    System.out.println("a: " + a +  " b: " + b + " c: " + c);
+                    return;
+                }
             }
         }
 
-        System.out.println(symmetry);
-    }
-
-    public static boolean isSymmetry(int n) {
-        String num = Integer.toString(n);
-
-        for(int i = 0; i < num.length()/2; i++){
-            if(num.charAt(i) != num.charAt(num.length()-1-i))return false;
-        }
-        return true;
     }
 }
