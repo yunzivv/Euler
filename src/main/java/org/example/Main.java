@@ -1,21 +1,33 @@
 package org.example;
 
-// project Euler 9
+// project Euler 12
 public class Main {
     public static void main(String[] args) {
 
-        int a = 1;
+        long num = 0;
+        int n = 1;
 
-        for(a = 1; a <= 400; a++){
-            for(int b = a + 1; b <= 400; b++){
-                double c = Math.sqrt(Math.pow(a, 2l) + Math.pow(b, 2l));
-                if(c % 1 == 0 && a + b + c == 1000) {
-                    System.out.println(a * b * c);
-                    System.out.println("a: " + a +  " b: " + b + " c: " + c);
-                    return;
+        while (true) {
+            num += n;
+            n++;
+
+            int count = 0;
+            long sqrt = (long)Math.sqrt(num);
+
+            for (long i = 1; i <= sqrt; i++) {
+                if (num % i == 0) {
+                    count += 2;
                 }
             }
-        }
 
+            if (sqrt * sqrt == num) {
+                count--;
+            }
+
+            if (count >= 500) {
+                System.out.println(num);
+                break;
+            }
+        }
     }
 }
