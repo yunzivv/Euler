@@ -2,21 +2,21 @@ package org.example;
 
 import java.math.BigInteger;
 
-// project Euler 15
+// project Euler 16
 public class Main {
     public static void main(String[] args) {
 
-        Long map = 20L;
+        BigInteger p = BigInteger.ONE;
+        int s = 0;
 
-        BigInteger c = BigInteger.ONE;
-        BigInteger s = BigInteger.ONE;
+        for(int i = 1; i <= 1000; i++) {p = p.multiply(BigInteger.TWO);}
 
-        for(int i = 1; i <= map; i++) {
-            s = s.multiply(BigInteger.valueOf(i));
-            c = c.multiply(BigInteger.valueOf(i+map));
+        String str = p.toString();
+        for(char c : str.toCharArray()) {
+            s += c - '0';
         }
 
-        System.out.println(c.divide(s));
+        System.out.println(s);
 
     }
 }
