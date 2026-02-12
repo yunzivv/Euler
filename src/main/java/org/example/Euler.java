@@ -1,25 +1,43 @@
 package org.example;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.math.BigInteger;
 import java.util.Arrays;
 
-// project Euler 25
+// project Euler 18
 public class Euler {
     public static void main(String[] args) {
 
-        BigInteger num1 = BigInteger.ONE;
-        BigInteger num2 = BigInteger.ONE;
-        BigInteger temp;
-        int count = 1;
+        int[][] triangle = {
+                {75},
+                {95, 64},
+                {17, 47, 82},
+                {18, 35, 87, 10},
+                {20, 4, 82, 47, 65},
+                {19, 1, 23, 75, 3, 34},
+                {88, 2, 77, 73, 7, 63, 67},
+                {99, 65, 4, 28, 6, 16, 70, 92},
+                {41, 41, 26, 56, 83, 40, 80, 70, 33},
+                {41, 48, 72, 33, 47, 32, 37, 16, 94, 29},
+                {53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14},
+                {70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57},
+                {91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48},
+                {63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
+                {4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}
+        };
 
-        while(true){
-            temp = num2;
-            num2 = num1.add(num2);
-            num1 = temp;
-            count++;
-            if(num2.toString().length() == 1000)break;
+        int len = triangle.length;
+        int[][] maxRoot = new int[len][len];
+        maxRoot[0][0] = triangle[0][0];
+
+        for(int i = 0; i < len - 1; i++){
+            for(int j = 0; j < triangle[i].length; j++){
+                int now = maxRoot[i][j];
+                maxRoot[i + 1][j] = Math.max(maxRoot[i + 1][j], triangle[i + 1][j] + now);
+                maxRoot[i + 1][j + 1] = Math.max(maxRoot[i + 1][j + 1], triangle[i + 1][j + 1] + now);
+            }
         }
-
-        System.out.println(count + 1);
+        System.out.println(Arrays.stream(maxRoot[len - 1]).max().getAsInt());
     }
 }
