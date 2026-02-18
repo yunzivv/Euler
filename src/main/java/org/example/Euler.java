@@ -1,25 +1,41 @@
 package org.example;
 
-// project Euler 21
+import java.util.ArrayList;
+
+// project Euler 23
 public class Euler {
     public static void main(String[] args) {
 
-        int[] d = new int[10000];
+        int[] sum = new int[28124];
 
-        for (int i = 1; i < 10000; i++) {
-            for (int j = i * 2; j < 10000; j += i) {
-                d[j] += i;
+        for (int i = 1; i <= 28123 / 2; i++) {
+            for (int j = i * 2; j <= 28123; j += i) {
+                sum[j] += i;
             }
         }
 
-        int sum = 0;
-        for (int a = 2; a < 10000; a++) {
-            int b = d[a];
-            if (b != a && b < 10000 && b > 0 && d[b] == a) {
-                sum += a;
+        ArrayList<Integer> ls = new ArrayList<>();
+        for (int n = 1; n <= 28123; n++) {
+            if (sum[n] > n) ls.add(n);
+        }
+
+        boolean[] pos = new boolean[28123 + 1];
+        int m = ls.size();
+
+        for (int i = 0; i < m; i++) {
+            int a = ls.get(i);
+            for (int j = i; j < m; j++) {
+                int s = a + ls.get(j);
+                if (s > 28123) break;
+                pos[s] = true;
             }
         }
 
-        System.out.println(sum);
+        long ans = 0;
+        for (int n = 1; n <= 28123; n++) {
+            if (!pos[n]) ans += n;
+        }
+
+        System.out.println(ans);
     }
 }
