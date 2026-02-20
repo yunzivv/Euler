@@ -1,41 +1,23 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-// project Euler 23
+// project Euler 24
 public class Euler {
     public static void main(String[] args) {
 
-        int[] sum = new int[28124];
+        int[] fac = {362880, 40320, 5040, 720, 120, 24, 6, 2, 1, 1};
+        ArrayList<Integer> list = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
 
-        for (int i = 1; i <= 28123 / 2; i++) {
-            for (int j = i * 2; j <= 28123; j += i) {
-                sum[j] += i;
-            }
+        int idx = 1000000 -1;
+        String s = "";
+
+        for(int i : fac){
+            s += list.remove(idx / i);
+            idx %= i;
         }
 
-        ArrayList<Integer> ls = new ArrayList<>();
-        for (int n = 1; n <= 28123; n++) {
-            if (sum[n] > n) ls.add(n);
-        }
-
-        boolean[] pos = new boolean[28123 + 1];
-        int m = ls.size();
-
-        for (int i = 0; i < m; i++) {
-            int a = ls.get(i);
-            for (int j = i; j < m; j++) {
-                int s = a + ls.get(j);
-                if (s > 28123) break;
-                pos[s] = true;
-            }
-        }
-
-        long ans = 0;
-        for (int n = 1; n <= 28123; n++) {
-            if (!pos[n]) ans += n;
-        }
-
-        System.out.println(ans);
+        System.out.println(s);
     }
 }

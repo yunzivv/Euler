@@ -10,10 +10,27 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        int[] tri = { sc.nextInt(), sc.nextInt(), sc.nextInt() };
-        Arrays.sort(tri);
+        int X = sc.nextInt();
 
-        if(tri[0] + tri[1] <= tri[2]) System.out.println((tri[0] + tri[1]) * 2 -1);
-        else System.out.println(tri[0] + tri[1] + tri[2]);
+        int sum = 0;
+        int k = 0;
+
+        while (sum < X) {
+            k++;
+            sum += k;
+        }
+
+        int pos = X - (sum - k);
+
+        int num, den;
+        if (k % 2 != 0) {
+            num = k - pos + 1;
+            den = pos;
+        } else {
+            num = pos;
+            den = k - pos + 1;
+        }
+
+        System.out.println(num + "/" + den);
     }
 }
