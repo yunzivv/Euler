@@ -1,23 +1,20 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-// project Euler 28
+// project Euler 29
 public class Euler {
     public static void main(String[] args) {
 
-        int n = 1;
-        int step = 1;
-        int cycle = 2;
+        Set<Double> set = new HashSet<>();
 
-        for(int i = 1; i < 1001; i += 2){
-            for(int j = 0; j < 4; j++) {
-                step += cycle;
-                n += step;
+        for(int i = 2; i <= 100; i++){
+            for(int j = 2; j <= 100; j++){
+                set.add(Math.pow(i, j));
             }
-            cycle += 2;
         }
-        System.out.println(n);
+
+        System.out.println(set.size());
     }
 }
