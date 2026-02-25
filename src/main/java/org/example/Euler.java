@@ -1,33 +1,21 @@
 package org.example;
 
-// project Euler 30
+// project Euler 31
 public class Euler {
     public static void main(String[] args) {
 
-        int ans = 0;
-        int max = 0;
+        int target = 200;
+        int[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
 
-        for (int n = 1; n < 20; n++) {
+        long[] dp = new long[target + 1];
+        dp[0] = 1;
 
-            double left = Math.pow(10, n - 1);
-            double right = n * Math.pow(9, 5);
-
-            if (left <= right) {
-                max = n;
+        for (int coin : coins) {
+            for (int sum = coin; sum <= target; sum++) {
+                dp[sum] += dp[sum - coin];
             }
         }
 
-        max *= (int)Math.pow(9, 5);
-
-        for(int i = 10; i < max; i++) {
-            String s = String.valueOf(i);
-            int sum = 0;
-            for(char c : s.toCharArray()) {
-                sum += (int) Math.pow(c - '0', 5);
-            }
-            if(sum == i) ans += i;
-        }
-
-        System.out.println(ans);
+        System.out.println(dp[target]);
     }
 }
