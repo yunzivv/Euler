@@ -5,21 +5,16 @@ import java.util.Scanner;
 
 public class Main {
 
-    static int count;
-    static int degree;
-
     public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
-        long n = sc.nextInt();
-        System.out.println(n * n);
-        System.out.println(2);
-    }
 
-    public void MenOfPassion (int n){
-        int sum = 0;
-        for(int i = 1; i <= n -1; i++){
+        int a1 = sc.nextInt();
+        int a0 = sc.nextInt();
+        int c = sc.nextInt();
+        int n0 = sc.nextInt();
 
-        }
+        if(a1 <= c && a1 * n0 + a0 <= c * n0) System.out.println(1);
+        else System.out.println(0);
     }
 }

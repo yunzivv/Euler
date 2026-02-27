@@ -1,21 +1,39 @@
 package org.example;
 
-// project Euler 31
+// project Euler 33
 public class Euler {
     public static void main(String[] args) {
 
-        int target = 200;
-        int[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
+        long m = 1;
+        long s = 1;
 
-        long[] dp = new long[target + 1];
-        dp[0] = 1;
+        for (int i = 20; i <= 99; i++) {
+            for (int j = 10; j < i; j++) {
 
-        for (int coin : coins) {
-            for (int sum = coin; sum <= target; sum++) {
-                dp[sum] += dp[sum - coin];
+                int it = i / 10, io = i % 10;
+                int jt = j / 10, jo = j % 10;
+
+                boolean ok = false;
+
+                if (io == jt && io != 0) ok |= (long)j * it == (long)i * jo;
+                if (it == jo && it != 0) ok |= (long)j * io == (long)i * jt;
+                if (io == jo && io != 0) ok |= (long)j * it == (long)i * jt;
+                if (it == jt && it != 0) ok |= (long)j * io == (long)i * jo;
+
+                if (ok) {
+                    m *= i;
+                    s *= j;
+                }
             }
         }
 
-        System.out.println(dp[target]);
+        for(int i = 2; i <= m; i++){
+            while(m % i == 0 && s % i == 0){
+                m /= i;
+                s /= i;
+            }
+        }
+
+        System.out.println(m);
     }
 }
