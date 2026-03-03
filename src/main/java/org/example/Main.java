@@ -8,13 +8,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
-
-        int a1 = sc.nextInt();
-        int a0 = sc.nextInt();
-        int c = sc.nextInt();
-        int n0 = sc.nextInt();
-
-        if(a1 <= c && a1 * n0 + a0 <= c * n0) System.out.println(1);
-        else System.out.println(0);
+        int n = sc.nextInt();
+        int answer = n / 5;
+        if((n % 5) % 3 != 0) {
+            if(n % 3 == 0) System.out.println(n / 3);
+            else System.out.println(-1);
+        }
+        else System.out.println(answer + answer / 3);
     }
 }
