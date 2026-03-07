@@ -1,7 +1,7 @@
 package org.example;
 // Baekjoon
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -9,11 +9,16 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int answer = n / 5;
-        if((n % 5) % 3 != 0) {
-            if(n % 3 == 0) System.out.println(n / 3);
-            else System.out.println(-1);
-        }
-        else System.out.println(answer + answer / 3);
+        Set<String> set = new HashSet<>();
+
+        for(int i = 0; i < n; i++) set.add(sc.next());
+
+        String[] arr = set.toArray(new String[set.size()]);
+        Arrays.sort(arr);
+        Arrays.sort(arr, (a, b) ->
+                a.length() - b.length()
+        );
+
+        for(String s : arr) System.out.println(s);
     }
 }
