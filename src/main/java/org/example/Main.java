@@ -9,16 +9,20 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        Set<String> set = new HashSet<>();
+        int ans = 0;
 
-        for(int i = 0; i < n; i++) set.add(sc.next());
+        for(int i = n - 1; i >= 0; i--) {
+            int sum = i;
+            int tmp = i;
 
-        String[] arr = set.toArray(new String[set.size()]);
-        Arrays.sort(arr);
-        Arrays.sort(arr, (a, b) ->
-                a.length() - b.length()
-        );
+            while(tmp > 0) {
+                sum += tmp % 10;
+                tmp /= 10;
+            }
 
-        for(String s : arr) System.out.println(s);
+            if(n == sum) ans = i;
+        }
+
+        System.out.println(ans);
     }
 }

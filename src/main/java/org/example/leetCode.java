@@ -8,32 +8,31 @@ public class leetCode {
 
         int[] arr = new int[]{7,6,4,4};
 
-        int[][] arr2 = {
-                {7}, {3, 8}, {8, 1, 0}, {2, 7, 4, 4}, {4, 5, 2, 6, 5}
-        };
+        String[] arr2 = {"00","01"};
 
-        System.out.println(isTrionic(arr));
+        System.out.println(findDifferentBinaryString(arr2));
     }
 
-    public static boolean isTrionic(int[] nums) {
+    public static String findDifferentBinaryString(String[] nums) {
 
-        int n = nums.length - 1;
-        if (n < 4) return false;
+        int len = nums[0].length();
+        String s = "";
 
-        int i = 0;
+        for(int i = 0; i < 17; i++){
+            s = String.format("%" + len + "s", Integer.toBinaryString(i)).replace(' ', '0');
+            boolean exist = false;
 
-        while (i < n && nums[i] < nums[i + 1]) i++;
-        int p = i;
-        if (p == 0) return false;
-        if (p >= n - 1) return false;
+            for(String n : nums) {
+                if (n.equals(s)) {
+                    exist = true;
+                    break;
+                }
+            }
 
-        while (i < n && nums[i] > nums[i + 1]) i++;
-        int q = i;
-        if (q == p) return false;
-        if (q >= n) return false;
-
-        while (i < n && nums[i] < nums[i + 1]) i++;
-
-        return i == n;
+            if(!exist){
+                return s;
+            }
+        }
+        return null;
     }
 }
