@@ -6,31 +6,18 @@ public class leetCode {
 
     public static void main(String[] args) {
 
-        int[] arr = new int[]{7,6,4,4};
+        int[] arr = new int[]{2,7,11,15};
 
         String[] arr2 = {"00","01"};
 
-        System.out.println(findDifferentBinaryString(arr2));
+        System.out.println(twoSum(arr, 9));
     }
 
-    public static String findDifferentBinaryString(String[] nums) {
+    public static int[] twoSum(int[] nums, int target) {
 
-        int len = nums[0].length();
-        String s = "";
-
-        for(int i = 0; i < 17; i++){
-            s = String.format("%" + len + "s", Integer.toBinaryString(i)).replace(' ', '0');
-            boolean exist = false;
-
-            for(String n : nums) {
-                if (n.equals(s)) {
-                    exist = true;
-                    break;
-                }
-            }
-
-            if(!exist){
-                return s;
+        for(int i = 0; i < nums.length - 1; i++){
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[i] + nums[j] == target) return new int[]{i, j};
             }
         }
         return null;
