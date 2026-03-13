@@ -8,21 +8,19 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
+
         int n = sc.nextInt();
-        int ans = 0;
+        String[][] arr = new String[n][2];
 
-        for(int i = n - 1; i >= 0; i--) {
-            int sum = i;
-            int tmp = i;
-
-            while(tmp > 0) {
-                sum += tmp % 10;
-                tmp /= 10;
-            }
-
-            if(n == sum) ans = i;
+        for (int i = 0; i < n; i++) {
+            arr[i][0] = sc.next();
+            arr[i][1] = sc.next();
         }
 
-        System.out.println(ans);
+        Arrays.sort(arr, (a, b) -> Integer.parseInt(a[0]) - Integer.parseInt(b[0]));
+
+        for (int i = 0; i < n; i++) {
+            System.out.println(arr[i][0] + " " + arr[i][1]);
+        }
     }
 }

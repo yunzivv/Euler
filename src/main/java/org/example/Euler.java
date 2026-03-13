@@ -1,33 +1,25 @@
 package org.example;
 
-import java.util.HashMap;
-
-// project Euler 26
+// project Euler 39
 public class Euler {
     public static void main(String[] args) {
 
-        int maxLength = 0;
         int answer = 0;
+        int maxCnt = 0;
 
-        for (int d = 2; d < 1000; d++) {
+        for (int l = 12; l <= 1000; l++) {
+            int cnt = 0;
 
-            HashMap<Integer, Integer> map = new HashMap<>();
-            int remainder = 1 % d;
-            int position = 0;
-
-            while (remainder != 0 && !map.containsKey(remainder)) {
-                map.put(remainder, position);
-                remainder = (remainder * 10) % d;
-                position++;
+            for(int a = 1; a <= l/3; a++){
+                for(int b = 1; b <= l/2; b++){
+                    int c = l - a - b;
+                    if(Math.pow(c, 2) == a * a + b * b) cnt++;
+                }
             }
 
-            if (remainder != 0) {
-                int cycleLength = position - map.get(remainder);
-
-                if (cycleLength > maxLength) {
-                    maxLength = cycleLength;
-                    answer = d;
-                }
+            if(maxCnt < cnt){
+                answer = l;
+                maxCnt = cnt;
             }
         }
 

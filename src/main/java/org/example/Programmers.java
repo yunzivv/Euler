@@ -1,116 +1,76 @@
 package org.example;
 
-import java.math.BigInteger;
 import java.util.*;
-import java.util.function.Function;
-
-import static org.example.Util.isPrime;
 
 public class Programmers {
     public static void main(String[] args) {
 
         int[] arr = new int[]{1, 1};
 
-        int[][] arr2 = {
-                {1, 1, 0, 1, 0},
-                {1, 1, 0, 0, 0},
-                {0, 0, 1, 0, 1},
-                {1, 0, 0, 1, 1},
-                {0, 0, 1, 1, 1}
-        };
+        int[][] arr2 = {{1,2,3,5},{5,6,7,8},{4,3,2,1}};
 
-        String[] strings = new String[]{"img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG"};
+        int[] fees =  new int[]{180, 5000, 10, 600};
+        String[] strings = new String[]{"05:34 5961 IN", "06:00 0000 IN",
+                "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN",
+                "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"};
 
-        Function<Integer, String> submit = makeSubmit(2593);
-        System.out.println(solution(strings));
+        int[] n = solution(fees, strings);
 
-//        for(int i : solution(strings)){
-//            System.out.println(i);
-//        }
     }
 
-    public static String[] solution(String[] files) {
-        String[] answer = new String[files.length];
+    static int[] solution(int[] fees, String[] records) {
+        Map<String, String> logs = new HashMap<>();
+        Map<String, Integer> used = new HashMap<>();
 
-        Map<String, Integer> map = new HashMap<>();
-        String[] heads = new String[files.length];
+        for(String r : records){
+            String[] log = r.split(" ");
 
-        int idx = 0;
+            if(log[2].charAt(0) == 'I'){
+                logs.put(log[1], log[0]);
+            } else {
+                String in = logs.get(log[1]);
 
-        for(String s : files){
-            int step = 0;
-            String head = "", number = "", tail = "";
+                int fee = usage(log[0], in);
 
-            for(char c : s.toCharArray()){
-                if(!Character.isDigit(c) && step == 0) head += c + "";
-                else if((!Character.isDigit(c) && step == 1) || step == 2) {
-                    step = 2;
-                    tail += c + "";
-                } else {
-                    step = 1;
-                    number += c + "";
-                }
+                if(used.get(log[1]) != null){
+                    used.put(log[1], used.get(log[1]) + fee);
+                } else used.put(log[1], fee);
+
+                logs.remove(log[1]);
             }
-            heads[idx] = head.toLowerCase();
-            map.put(head, idx);
-            map.put(number, idx);
-            map.put(tail, idx++);
         }
 
-        System.out.println(map.keySet());
+        if (logs.size() > 0) {
+            for (String key : logs.keySet()) {
+                String in = logs.get(key);
+
+                int fee = usage("23:59", in);
+
+                if(used.containsKey(key)){
+                    used.put(key, used.get(key) + fee);
+                } else used.put(key, fee);
+            }
+        }
+
+        TreeMap<String, Integer> map = new TreeMap<>(used);
+        int[] answer = new int [map.size()];
+        int i = 0;
+
+        for(String key : map.keySet()){
+            int m = map.get(key);
+            int fee = m > fees[0] ?
+                    fees[1] + (int)Math.ceil((m - fees[0]) / (fees[2] * 1.0)) * fees[3] :
+                    fees[1];
+            answer[i++] = fee;
+        }
 
         return answer;
     }
 
-    private static String baseball(String target, String answer) {
+    public static int usage(String out, String in) {
 
-        int strike = 0;
-        int ball = 0;
-
-        for(int i = 0; i < 4; i++){
-            if(target.charAt(i) == answer.charAt(i)) {
-                strike++;
-                continue;
-            }
-            if(target.contains(answer.charAt(i) +"")) ball++;
-        }
-
-        return strike + "S " + ball + "B";
-    }
-
-
-
-    private static Function<Integer, String> makeSubmit(int secret) {
-        final String s = String.format("%04d", secret); // 혹시 0 포함 테스트도 가능하게 4자리 고정
-
-        return (Integer guess) -> {
-            String g = String.format("%04d", guess);
-
-            int strikes = 0;
-            int balls = 0;
-
-            // strike 계산
-            for (int i = 0; i < 4; i++) {
-                if (g.charAt(i) == s.charAt(i)) strikes++;
-            }
-
-            // ball 계산 (자릿수별 중복까지 안전하게 세는 방식)
-            int[] cntS = new int[10];
-            int[] cntG = new int[10];
-
-            for (int i = 0; i < 4; i++) {
-                if (g.charAt(i) != s.charAt(i)) { // strike 제외한 것만 카운트
-                    cntS[s.charAt(i) - '0']++;
-                    cntG[g.charAt(i) - '0']++;
-                }
-            }
-
-            for (int d = 0; d < 10; d++) {
-                balls += Math.min(cntS[d], cntG[d]);
-            }
-
-            return strikes + "S " + balls + "B";
-        };
+        int h = Integer.parseInt(out.substring(0, 2)) - Integer.parseInt(in.substring(0, 2));
+        return (h * 60) + Integer.parseInt(out.substring(3, 5)) - Integer.parseInt(in.substring(3, 5)); // total
     }
 
 }
