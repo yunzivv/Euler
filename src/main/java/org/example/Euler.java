@@ -1,22 +1,33 @@
 package org.example;
 
-// project Euler 36
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Set;
+
+// project Euler 42
 public class Euler {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         int answer = 0;
 
-        for (int i = 999999999; i > 2; i -= 2) {
+        Set<Integer> set = new HashSet<>();
+        int n = 1;
+        for(int i = 2; i < 100; i++){
+            set.add(n);
+            n += i;
+        }
 
-            int len = (int)Math.log10(i) + 1;
-            int mask = Util.pandigital(0, i);
+        String content = Files.readString(Paths.get("words.txt"));
+        String[] words = content.replace("\"", "").split(",");
 
-            if(mask != (1 << (len + 1)) - 2) continue;
-
-            if (Util.isPrime(i)) {
-                answer = i;
-                break;
+        for (String w : words) {
+            n = 0;
+            for(char c : w.toCharArray()){
+                n += c - 'A' + 1;
             }
+            if(set.contains(n)) answer++;
         }
 
         System.out.println(answer);
