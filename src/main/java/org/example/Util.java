@@ -12,4 +12,17 @@ public class Util {
         }
         return true;
     }
+
+    static int pandigital(int mask, int n){
+        while(n > 0){
+            int d = n % 10;
+
+            if(d == 0) return -1;
+            if((mask & (1 << d)) != 0) return -1;
+
+            mask |= 1 << d;
+            n /= 10;
+        }
+        return mask;
+    }
 }
