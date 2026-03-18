@@ -1,35 +1,37 @@
 package org.example;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Set;
 
-// project Euler 42
+// project Euler 44
 public class Euler {
     public static void main(String[] args) throws IOException {
 
-        int answer = 0;
+        int answer = Integer.MAX_VALUE;
 
-        Set<Integer> set = new HashSet<>();
-        int n = 1;
-        for(int i = 2; i < 100; i++){
-            set.add(n);
-            n += i;
-        }
+        for(int i = 8; i < 10000; i++){
+            int s = getPentagonal(i);
 
-        String content = Files.readString(Paths.get("words.txt"));
-        String[] words = content.replace("\"", "").split(",");
+            for(int a = 1; a < i; a++){
+                int b = getPentagonalIndex(s - getPentagonal(a));
 
-        for (String w : words) {
-            n = 0;
-            for(char c : w.toCharArray()){
-                n += c - 'A' + 1;
+                if(b != -1){
+                    int sub = Math.abs(getPentagonal(a) - getPentagonal(b));
+                    if(getPentagonalIndex(sub) != -1) answer = Math.min(answer, sub);
+                }
             }
-            if(set.contains(n)) answer++;
+
         }
 
         System.out.println(answer);
+    }
+
+    static int getPentagonalIndex(int x) {
+        double n = (1 + Math.sqrt(1 + 24 * x)) / 6;
+        if (n == (int)n) return (int)n;
+        return -1;
+    }
+
+    static int getPentagonal(int n){
+        return n * (3 * n - 1) / 2;
     }
 }
