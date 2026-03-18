@@ -25,4 +25,22 @@ public class Util {
         }
         return mask;
     }
+
+    static int getTriangularIndex(long x) {
+        double n = (Math.sqrt(1 + 8 * x) - 1) / 2;
+        if (n == (int)n) return (int)n;
+        return -1;
+    }
+
+    static int getPentagonalIndex(long x) {
+        double n = (1 + Math.sqrt(1 + 24 * x)) / 6;
+        if (n == (int)n) return (int)n;
+        return -1;
+    }
+
+    static int getHexagonalIndex(long x) {
+        double n = (1 + Math.sqrt(1 + 8 * x)) / 4;
+        if (n == (int)n) return (int)n;
+        return -1;
+    }
 }
