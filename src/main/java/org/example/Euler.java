@@ -1,51 +1,21 @@
 package org.example;
 
 
-import java.util.HashSet;
-import java.util.Set;
-
-// project Euler 47
+// project Euler 48
 public class Euler {
     public static void main(String[] args) {
 
-        int answer = 0;
-        int n = 0;
+        long answer = 0L;
 
-        int[] primes = new int[1000];
-
-        for(int i = 2; i < 10000; i++){
-            if(n == 1000) break;
-            if(Util.isPrime(i)) primes[n++] = i;
-        }
-
-        n = 30;
-        int cnt = 0;
-        boolean find = false;
-
-        while(true){
-
-            Set<Integer> primesSet = new HashSet<>();
-
-            int m = n;
-            for(int i = 0; i < 1000; i++){
-                if(m == 0) break;
-                while(m % primes[i] == 0) {
-                    primesSet.add(i);
-                    m /= primes[i];
-                }
+        for(int i = 1; i <= 1000; i++){
+            long n = i;
+            for(int j = 1; j < i; j++){
+                n *= i;
+                n %= 10000000000L;
             }
 
-            if(primesSet.size() == 4){
-                cnt++;
-                if(!find) answer = n;
-                find = true;
-            } else {
-                find = false;
-                cnt = 0;
-            }
-
-            if(cnt == 4) break;
-            n++;
+            answer += n;
+            answer %= 10000000000L;
         }
 
         System.out.println(answer);
