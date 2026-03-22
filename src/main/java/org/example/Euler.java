@@ -5,39 +5,31 @@ import java.util.*;
 public class Euler {
     public static void main(String[] args) {
 
-        List<Integer> list = new ArrayList<>();
+        int answer = 123;
 
-        // 소수 리스트
-        list.add(2);
-        for (int i = 3; i < 1000000; i += 2) {
-            if (Util.isPrime(i)) {
-                list.add(i);
+        while(true){
+            answer++;
+
+            // 1-6배의 각 자리 수를 담을 배열
+            char[][] nums = new char[6][String.valueOf(answer).length()];
+
+            for(int i = 1; i <= 6; i++){
+                nums[i - 1] = String.valueOf(answer * i).toCharArray();
+                // 정렬
+                Arrays.sort(nums[i - 1]);
             }
-        }
 
-        int answer = 0;
-        int len = 0;
-
-        for (int start = 0; start < list.size(); start++) {
-
-            int sum = 0;
-
-            // end 늘려가면서 합 구하기
-            for (int end = start; end < list.size(); end++) {
-
-                sum += list.get(end);
-                if (sum >= 1000000) break;
-
-                // 소수 + 길이 체크
-                if (Util.isPrime(sum)) {
-                    int curLen = end - start + 1;
-
-                    if (curLen > len) {
-                        len = curLen;
-                        answer = sum;
-                    }
+            // 정렬 후 같은 숫자로 이루어지는 지 확인
+            boolean ok = false;
+            for(int i = 0; i < String.valueOf(answer).length(); i++){
+                if(nums[0][i] != nums[1][i] || nums[2][i] != nums[3][i] || nums[4][i] != nums[5][i]
+                || nums[0][i] != nums[2][i] || nums[0][i] != nums[4][i]){
+                    ok = true;
+                    break;
                 }
             }
+
+            if(!ok) break;
         }
 
         System.out.println(answer);
