@@ -1,47 +1,27 @@
 package org.example;
 
-// Euler 55
+// Euler 56
+
+import java.math.BigInteger;
 
 public class Euler {
     public static void main(String[] args) {
 
         int answer = 0;
 
-        for(long i = 1; i < 10_000; i++){
+        for(int a = 2; a < 100; a++){
+            for(int b = 2; b < 100; b++){
+                BigInteger sum = BigInteger.valueOf(a).pow(b);
 
-            long n = i;
-            boolean ok = true;
-
-            for(int j = 0; j < 50; j++){
-                n += (getReverseNum(n));
-                if(isPalindrome(n)){
-                    ok = false;
-                    break;
+                int n = 0;
+                for(char c :sum.toString().toCharArray()){
+                    n += c-'0';
                 }
-            }
 
-            if(ok) answer++;
+                answer = Math.max(answer, n);
+            }
         }
 
         System.out.println(answer);
-    }
-
-    static long getReverseNum (long n){
-        long answer = 0;
-        while(n > 0){
-            answer = answer * 10 + n % 10;
-            n = n / 10;
-        }
-
-        return answer;
-    }
-
-    static boolean isPalindrome (long n){
-        String s = String.valueOf(n);
-        for(int i = 0; i < s.length()/2; i++){
-            if(s.charAt(i) != s.charAt(s.length()-i-1)) return false;
-        }
-
-        return true;
     }
 }
