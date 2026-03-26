@@ -1,27 +1,31 @@
 package org.example;
 
-// Euler 56
-
-import java.math.BigInteger;
+// Euler 58
 
 public class Euler {
     public static void main(String[] args) {
 
-        int answer = 0;
+        int n = 1;
+        int step = 2;
 
-        for(int a = 2; a < 100; a++){
-            for(int b = 2; b < 100; b++){
-                BigInteger sum = BigInteger.valueOf(a).pow(b);
+        int primeCnt = 0;
+        int totalCnt = 1;
 
-                int n = 0;
-                for(char c :sum.toString().toCharArray()){
-                    n += c-'0';
-                }
-
-                answer = Math.max(answer, n);
+        while(true){
+            for(int i = 0; i < 4; i++){
+                n += step;
+                if(Util.isPrime(n)) primeCnt++;
             }
+
+            totalCnt += 4;
+
+            double ratio = (double) primeCnt / totalCnt;
+
+            if(ratio < 0.1) break;
+
+            step += 2;
         }
 
-        System.out.println(answer);
+        System.out.println(step + 1);
     }
 }
