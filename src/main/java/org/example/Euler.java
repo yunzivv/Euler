@@ -1,49 +1,27 @@
 package org.example;
 
-// Euler 59
+// Euler 57
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.math.BigInteger;
 
 public class Euler {
     public static void main(String[] args) throws IOException {
 
         int answer = 0;
+        BigInteger s = BigInteger.valueOf(3);
+        BigInteger p = BigInteger.TWO;
 
-        String password = Files.readString(Path.of("text.txt"));
-        String[] split = password.split(",");
-        int[] letter = new int[split.length];
+        for(int i = 0; i < 1000; i++) {
+            BigInteger tmp = s;
+            s = p.multiply(BigInteger.TWO).add(s);
+            p = p.add(tmp);
 
-        for (int i = 0; i < split.length; i++) {
-            letter[i] = Integer.parseInt(split[i].trim());
+            int sLen = String.valueOf(s).length();
+            int pLen = String.valueOf(p).length();
+            if(sLen > pLen) answer++;
         }
 
-        for (char a = 'a'; a <= 'z'; a++) {
-            for (char b = 'a'; b <= 'z'; b++) {
-                for (char c = 'a'; c <= 'z'; c++) {
-
-                    char[] key = {a, b, c};
-                    StringBuilder decoded = new StringBuilder();
-
-                    for (int i = 0; i < letter.length; i++) {
-                        char ch = (char)(letter[i] ^ key[i % 3]);
-                        decoded.append(ch);
-                    }
-
-                    String res = decoded.toString();
-
-                    if (res.contains(" the ")) {
-                        System.out.println("" + a + b + c);
-                        for(char r : res.toCharArray()){
-                            answer += r;
-                        }
-                        System.out.println(answer);
-                        return;
-                    }
-                }
-            }
-        }
-
+        System.out.println(answer);
     }
 }

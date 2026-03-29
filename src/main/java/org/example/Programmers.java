@@ -14,57 +14,31 @@ public class Programmers {
                 "06:34 0000 OUT", "07:59 5961 OUT", "07:59 0148 IN",
                 "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"};
 
-        int[] n = solution(fees, strings);
+        int n = solution(10, 40, 5);
+        System.out.println(n);
 
     }
 
-    static int[] solution(int[] fees, String[] records) {
-        Map<String, String> logs = new HashMap<>();
-        Map<String, Integer> used = new HashMap<>();
+    static int solution(int x, int y, int n) {
+        int answer = 1;
 
-        for(String r : records){
-            String[] log = r.split(" ");
+        Queue<Integer> q = new LinkedList<>();
+        q.add(x);
 
-            if(log[2].charAt(0) == 'I'){
-                logs.put(log[1], log[0]);
-            } else {
-                String in = logs.get(log[1]);
+        while(true){
+            x = q.poll();
 
-                int fee = usage(log[0], in);
+            if(x == y) break;
+            if(x > y) return -1;
 
-                if(used.get(log[1]) != null){
-                    used.put(log[1], used.get(log[1]) + fee);
-                } else used.put(log[1], fee);
+            q.add(x * 2);
+            q.add(x * 3);
+            q.add(x + n);
 
-                logs.remove(log[1]);
-            }
+            answer++;
         }
 
-        if (logs.size() > 0) {
-            for (String key : logs.keySet()) {
-                String in = logs.get(key);
-
-                int fee = usage("23:59", in);
-
-                if(used.containsKey(key)){
-                    used.put(key, used.get(key) + fee);
-                } else used.put(key, fee);
-            }
-        }
-
-        TreeMap<String, Integer> map = new TreeMap<>(used);
-        int[] answer = new int [map.size()];
-        int i = 0;
-
-        for(String key : map.keySet()){
-            int m = map.get(key);
-            int fee = m > fees[0] ?
-                    fees[1] + (int)Math.ceil((m - fees[0]) / (fees[2] * 1.0)) * fees[3] :
-                    fees[1];
-            answer[i++] = fee;
-        }
-
-        return answer;
+        return answer / 3;
     }
 
     public static int usage(String out, String in) {
